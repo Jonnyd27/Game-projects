@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://squ8u5b55cxe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0dni3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tq7xy"]
+bg_color = Color(0.137255, 0.380392, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_15w7r"]
+bg_color = Color(0.835294, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cmn1g"]
+bg_color = Color(0.905882, 0.905882, 0, 1)
+
+[node name="PaintBar" type="Node2D"]
+scale = Vector2(0.319999, 0.439999)
+
+[node name="BluePaintBar" type="ProgressBar" parent="."]
+offset_left = -25.0
+offset_right = 23.0
+offset_bottom = 8.0
+theme_override_styles/background = SubResource("StyleBoxFlat_0dni3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tq7xy")
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="RedPaintBar" type="ProgressBar" parent="."]
+offset_left = -25.0
+offset_top = -10.0
+offset_right = 23.0
+offset_bottom = -2.0
+theme_override_styles/background = SubResource("StyleBoxFlat_0dni3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_15w7r")
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="YellowPaintBar" type="ProgressBar" parent="."]
+offset_left = -25.0
+offset_top = -20.0
+offset_right = 23.0
+offset_bottom = -12.0
+theme_override_styles/background = SubResource("StyleBoxFlat_0dni3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cmn1g")
+show_percentage = false
+metadata/_edit_use_anchors_ = true

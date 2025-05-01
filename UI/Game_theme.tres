@@ -1,0 +1,77 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://bkb2p8h7ux7nn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_11ors"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.839216, 0.690196, 0.462745, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.517647, 0.427451, 0.541176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_im240"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.672819, 0.531216, 0.309506, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.517647, 0.427451, 0.541176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ia5ey"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.8908, 0.757566, 0.557505, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.517647, 0.427451, 0.541176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a5tkd"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.839216, 0.690196, 0.462745, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.517647, 0.427451, 0.541176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q02se"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.672819, 0.531216, 0.309506, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.517647, 0.427451, 0.541176, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xl42a"]
+bg_color = Color(0.54902, 0.443137, 0.654902, 1)
+
+[resource]
+Button/font_sizes/font_size = 18
+Button/styles/disabled = SubResource("StyleBoxFlat_11ors")
+Button/styles/focus = SubResource("StyleBoxFlat_im240")
+Button/styles/hover = SubResource("StyleBoxFlat_ia5ey")
+Button/styles/normal = SubResource("StyleBoxFlat_a5tkd")
+Button/styles/pressed = SubResource("StyleBoxFlat_q02se")
+MarginContainer/constants/margin_bottom = 10
+MarginContainer/constants/margin_left = 10
+MarginContainer/constants/margin_right = 10
+MarginContainer/constants/margin_top = 10
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_xl42a")

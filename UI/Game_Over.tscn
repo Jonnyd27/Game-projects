@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://csy2mjxb02gly"]
+
+[ext_resource type="Script" path="res://UI/Scripts/game_over.gd" id="1_uy21f"]
+[ext_resource type="Theme" uid="uid://bkb2p8h7ux7nn" path="res://UI/Game_theme.tres" id="3_ulie1"]
+
+[node name="GameOver" type="CanvasLayer"]
+process_mode = 3
+layer = 2
+script = ExtResource("1_uy21f")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_ulie1")
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Paint Again!" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Paint Again!"
+
+[node name="Give Up!" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Give Up!"
+
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Paint Again!" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Paint Again!" to="." method="_on_paint_again_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Give Up!" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/Give Up!" to="." method="_on_give_up_pressed"]
