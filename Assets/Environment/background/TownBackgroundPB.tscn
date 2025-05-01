@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://dylnhj8wgsivb"]
+
+[ext_resource type="Texture2D" uid="uid://dvxhnux6icou3" path="res://Assets/Environment/background/TownBackground.png" id="1_3cb43"]
+
+[node name="parallaxBackground" type="ParallaxBackground"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+texture = ExtResource("1_3cb43")
+centered = false
+offset = Vector2(0, -350)
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+position = Vector2(452, 0)
+motion_scale = Vector2(0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer2"]
+texture = ExtResource("1_3cb43")
+centered = false
+offset = Vector2(0, -350)
+flip_h = true

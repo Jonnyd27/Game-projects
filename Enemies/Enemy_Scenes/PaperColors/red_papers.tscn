@@ -1,0 +1,209 @@
+[gd_scene load_steps=23 format=3 uid="uid://crg84miroo8sj"]
+
+[ext_resource type="Script" path="res://Enemies/Enemy_Scripts/PapersScript.gd" id="1_egjxy"]
+[ext_resource type="Texture2D" uid="uid://bkerkw1yf21gc" path="res://Enemies/EnemyAnim/PaperAnim.png" id="2_lnx2y"]
+[ext_resource type="Script" path="res://Enemies/EnemyStates/Papergravity.gd" id="3_70caf"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/node_finite_state_machine.gd" id="4_wps1c"]
+[ext_resource type="Script" path="res://Enemies/EnemyStates/PaperidleState.gd" id="5_y10qk"]
+[ext_resource type="Script" path="res://Enemies/EnemyStates/PaperAttack_State.gd" id="6_nkxke"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgawj"]
+atlas = ExtResource("2_lnx2y")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yxu8"]
+atlas = ExtResource("2_lnx2y")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_coplq"]
+atlas = ExtResource("2_lnx2y")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rcmo1"]
+atlas = ExtResource("2_lnx2y")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2byk"]
+atlas = ExtResource("2_lnx2y")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fbuoh"]
+atlas = ExtResource("2_lnx2y")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ocqyc"]
+atlas = ExtResource("2_lnx2y")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s7ctg"]
+atlas = ExtResource("2_lnx2y")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_quu3q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgawj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yxu8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_coplq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rcmo1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2byk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fbuoh")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ocqyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s7ctg")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 3.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8okr"]
+size = Vector2(27.5, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plygb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hlovw"]
+radius = 132.185
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s745k"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_beob5"]
+bg_color = Color(0.137255, 0.380392, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hnb0j"]
+bg_color = Color(0.835294, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ab81n"]
+bg_color = Color(0.905882, 0.905882, 0, 1)
+
+[node name="RedPapers" type="CharacterBody2D" node_paths=PackedStringArray("Enemy") groups=["Enemy"]]
+position = Vector2(0, -16)
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_egjxy")
+correct_color = "d50000"
+Enemy = NodePath("AnimatedSprite2D")
+blue_bar_amount = 30
+yellow_bar_amount = 20
+red_bar_amount = 40
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_quu3q")
+animation = &"Death"
+autoplay = "Walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-4, 0.5)
+scale = Vector2(0.817623, 1.08)
+shape = SubResource("RectangleShape2D_u8okr")
+debug_color = Color(0.206732, 0.617008, 0.491002, 0.42)
+
+[node name="HitBox" type="Area2D" parent="."]
+visible = false
+position = Vector2(-4, 0)
+scale = Vector2(0.959999, 1.36)
+collision_layer = 4
+collision_mask = 2
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("RectangleShape2D_plygb")
+
+[node name="Gravity" type="Node" parent="." node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("3_70caf")
+character_body_2d = NodePath("..")
+animated_sprite_2d = NodePath("../AnimatedSprite2D")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_node_state")]
+script = ExtResource("4_wps1c")
+initial_node_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("5_y10qk")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("6_nkxke")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+speed = 30
+
+[node name="AttackArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_hlovw")
+debug_color = Color(0.76321, 0.440736, 0.25413, 0.42)
+
+[node name="DeathAnimationTimer" type="Timer" parent="."]
+
+[node name="PaintBar" type="Node2D" parent="."]
+position = Vector2(-19, -25)
+
+[node name="BluePaintBar" type="ProgressBar" parent="PaintBar"]
+offset_left = 3.0
+offset_top = 6.0
+offset_right = 27.0
+offset_bottom = 10.0
+theme_override_styles/background = SubResource("StyleBoxFlat_s745k")
+theme_override_styles/fill = SubResource("StyleBoxFlat_beob5")
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="RedPaintBar" type="ProgressBar" parent="PaintBar"]
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 27.0
+offset_bottom = 5.0
+theme_override_styles/background = SubResource("StyleBoxFlat_s745k")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hnb0j")
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="YellowPaintBar" type="ProgressBar" parent="PaintBar"]
+offset_left = 3.0
+offset_top = -4.0
+offset_right = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_s745k")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ab81n")
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="body_entered" from="AttackArea" to="StateMachine/Idle" method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="StateMachine/Attack" method="_on_attack_area_body_exited"]
+[connection signal="timeout" from="DeathAnimationTimer" to="." method="_on_death_animation_timer_timeout"]

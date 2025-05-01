@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=3 uid="uid://bq817o54cqda3"]
+
+[ext_resource type="Texture2D" uid="uid://cjojcf8cn8hy8" path="res://Player/PlayerAnim/Idle.png" id="1_o2lj6"]
+[ext_resource type="Script" path="res://Assets/NPCs/apothecary.gd" id="2_fko1e"]
+[ext_resource type="PackedScene" uid="uid://dp53f328oi0l4" path="res://Assets/NPCs/Dialogue/dialogue_box.tscn" id="3_jta1f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqpxw"]
+atlas = ExtResource("1_o2lj6")
+region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amc3t"]
+atlas = ExtResource("1_o2lj6")
+region = Rect2(200, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0iy8t"]
+atlas = ExtResource("1_o2lj6")
+region = Rect2(400, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbge4"]
+atlas = ExtResource("1_o2lj6")
+region = Rect2(600, 0, 200, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2xa3"]
+atlas = ExtResource("1_o2lj6")
+region = Rect2(800, 0, 200, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7w8rm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iqpxw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amc3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0iy8t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbge4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2xa3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nii0d"]
+radius = 53.71
+
+[node name="Apothecary" type="AnimatedSprite2D" groups=["NPC"]]
+self_modulate = Color(0.364706, 0.364706, 1, 1)
+sprite_frames = SubResource("SpriteFrames_7w8rm")
+autoplay = "default"
+frame_progress = 0.195224
+script = ExtResource("2_fko1e")
+
+[node name="Chat_Detection_area" type="Area2D" parent="." groups=["NPC"]]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chat_Detection_area" groups=["NPC"]]
+visible = false
+shape = SubResource("CircleShape2D_nii0d")
+debug_color = Color(0.595916, 0.544876, 0.0401291, 0.42)
+
+[node name="Apothecary_dialogue" parent="." instance=ExtResource("3_jta1f")]
+offset_left = -48.0
+offset_top = 16.0
+offset_right = -48.0
+offset_bottom = 16.0
+
+[connection signal="body_entered" from="Chat_Detection_area" to="." method="_on_chat_detection_area_body_entered"]
+[connection signal="body_exited" from="Chat_Detection_area" to="." method="_on_chat_detection_area_body_exited"]
+[connection signal="blue_paint" from="Apothecary_dialogue" to="." method="_on_apothecary_dialogue_blue_paint"]
+[connection signal="red_paint" from="Apothecary_dialogue" to="." method="_on_apothecary_dialogue_red_paint"]
+[connection signal="yellow_paint" from="Apothecary_dialogue" to="." method="_on_apothecary_dialogue_yellow_paint"]

@@ -1,0 +1,155 @@
+[gd_scene load_steps=21 format=3 uid="uid://egyd3e5trljk"]
+
+[ext_resource type="Texture2D" uid="uid://b8lbkbhlwsf5b" path="res://Enemies/EnemyAnim/PaperAirplane.png" id="1_4ndq8"]
+[ext_resource type="Script" path="res://Enemies/Enemy_Scripts/paper_airplane.gd" id="1_wtaxv"]
+[ext_resource type="AudioStream" uid="uid://bqorphw2m6fpc" path="res://Enemies/EnemySounds/PaperDeathSound.wav" id="2_fesj5"]
+[ext_resource type="AudioStream" uid="uid://behfpw5usa4if" path="res://Enemies/EnemySounds/PlaneSound.wav" id="3_cu5gf"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/node_finite_state_machine.gd" id="4_kq61v"]
+[ext_resource type="Script" path="res://Enemies/EnemyStates/Airplane_Idle.gd" id="5_nygw4"]
+[ext_resource type="Script" path="res://Enemies/EnemyStates/Airplane_Attack.gd" id="6_6ls76"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1iuh1"]
+atlas = ExtResource("1_4ndq8")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wdge"]
+atlas = ExtResource("1_4ndq8")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7ycd"]
+atlas = ExtResource("1_4ndq8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqpjj"]
+atlas = ExtResource("1_4ndq8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mnlhh"]
+atlas = ExtResource("1_4ndq8")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmkpe"]
+atlas = ExtResource("1_4ndq8")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62qgm"]
+atlas = ExtResource("1_4ndq8")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kffxv"]
+atlas = ExtResource("1_4ndq8")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb3l5"]
+atlas = ExtResource("1_4ndq8")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7l8at"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1iuh1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2wdge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i7ycd")
+}],
+"loop": true,
+"name": &"Attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqpjj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mnlhh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kmkpe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62qgm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kffxv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb3l5")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_de8u1"]
+size = Vector2(30, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1il0a"]
+radius = 248.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5kecc"]
+size = Vector2(28, 16)
+
+[node name="Paper_Airplane" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_wtaxv")
+correct_color = "2361ff"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7l8at")
+animation = &"Attack"
+autoplay = "Attack"
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="AnimatedSprite2D"]
+stream = ExtResource("2_fesj5")
+
+[node name="FlySound" type="AudioStreamPlayer2D" parent="AnimatedSprite2D"]
+stream = ExtResource("3_cu5gf")
+volume_db = -10.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_de8u1")
+
+[node name="AttackArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_1il0a")
+debug_color = Color(0.633701, 0.519026, 0.275931, 0.42)
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_5kecc")
+debug_color = Color(0.845002, 0.361636, 0.303102, 0.42)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_node_state")]
+script = ExtResource("4_kq61v")
+initial_node_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("5_nygw4")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+slow_down_speed = 150
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "animated_sprite_2d")]
+script = ExtResource("6_6ls76")
+character_body_2d = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+speed = 120
+
+[connection signal="body_entered" from="AttackArea" to="StateMachine/Idle" method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="StateMachine/Attack" method="_on_attack_area_body_exited"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]

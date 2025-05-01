@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://bku6wvu54u5ei"]
+
+[ext_resource type="Texture2D" uid="uid://x7056e0omhfr" path="res://Assets/Environment/background/Mountain_Scene-1.png" id="1_p8btu"]
+[ext_resource type="Texture2D" uid="uid://cah0wodwhhfe3" path="res://Assets/Environment/background/Mountain_Scene-2.png" id="2_8310u"]
+[ext_resource type="Texture2D" uid="uid://cp2uum1so1vrc" path="res://Assets/Environment/background/Mountain_Scene-3.png" id="3_ues58"]
+[ext_resource type="Texture2D" uid="uid://bxldptujfb2lb" path="res://Assets/Environment/background/Mountain_Scene-5.png" id="4_pegqd"]
+[ext_resource type="Texture2D" uid="uid://cpv0ndp8gqi4o" path="res://Assets/Environment/background/Mountain_Scene-6.png" id="5_vccdg"]
+[ext_resource type="Texture2D" uid="uid://eqpdegoyr2ey" path="res://Assets/Environment/background/Mountain_Scene-4.png" id="6_jk6je"]
+
+[node name="MountainScapeBackground" type="ParallaxBackground"]
+
+[node name="BackGround" type="ParallaxLayer" parent="."]
+position = Vector2(0, -32)
+motion_scale = Vector2(0.1, 1)
+motion_mirroring = Vector2(1000, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="BackGround"]
+texture = ExtResource("1_p8btu")
+centered = false
+offset = Vector2(0, -469)
+
+[node name="Sprite2D2" type="Sprite2D" parent="BackGround"]
+texture = ExtResource("2_8310u")
+centered = false
+offset = Vector2(0, -469)
+
+[node name="MiddleGround" type="ParallaxLayer" parent="."]
+visible = false
+position = Vector2(0, -32)
+motion_scale = Vector2(0.5, 1)
+motion_mirroring = Vector2(1000, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="MiddleGround"]
+texture = ExtResource("3_ues58")
+centered = false
+offset = Vector2(0, -469)
+
+[node name="MiddleGround2" type="ParallaxLayer" parent="."]
+visible = false
+position = Vector2(0, -32)
+motion_scale = Vector2(0.8, 1)
+motion_mirroring = Vector2(1000, 0)
+
+[node name="Sprite2D5" type="Sprite2D" parent="MiddleGround2"]
+texture = ExtResource("4_pegqd")
+centered = false
+offset = Vector2(0, -469)
+
+[node name="ForeGround" type="ParallaxLayer" parent="."]
+visible = false
+position = Vector2(0, -32)
+motion_mirroring = Vector2(1000, 0)
+
+[node name="Sprite2D4" type="Sprite2D" parent="ForeGround"]
+texture = ExtResource("6_jk6je")
+centered = false
+offset = Vector2(0, -469)
+
+[node name="Sprite2D3" type="Sprite2D" parent="ForeGround"]
+texture = ExtResource("5_vccdg")
+centered = false
+offset = Vector2(0, -469)

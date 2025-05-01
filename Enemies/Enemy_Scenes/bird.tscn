@@ -1,0 +1,178 @@
+[gd_scene load_steps=19 format=3 uid="uid://dk27stoipsdu2"]
+
+[ext_resource type="Script" path="res://Enemies/Enemy_Scripts/bird.gd" id="1_lponf"]
+[ext_resource type="Texture2D" uid="uid://clsf2pmy6fd0p" path="res://Enemies/EnemyAnim/Bird_Still-2.png" id="1_vr48o"]
+[ext_resource type="Texture2D" uid="uid://c22qaomr6mk72" path="res://Assets/NPCs/Bird_Still-1.png" id="2_2eqqy"]
+[ext_resource type="Script" path="res://Scripts/StateMachine/node_finite_state_machine.gd" id="3_vww55"]
+[ext_resource type="Script" path="res://Enemies/Enemy_Scripts/bird_idle.gd" id="4_oc0cy"]
+[ext_resource type="Script" path="res://Enemies/Enemy_Scripts/bird_Attack.gd" id="6_bln0r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w6we7"]
+atlas = ExtResource("1_vr48o")
+region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bl7pw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w6we7")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h42vx"]
+atlas = ExtResource("2_2eqqy")
+region = Rect2(0, 0, 200, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lsla3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h42vx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xrdv7"]
+size = Vector2(15, 14)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xtvg1"]
+bg_color = Color(0.137255, 0.380392, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yrtc5"]
+bg_color = Color(0.835294, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ww6sq"]
+bg_color = Color(0.905882, 0.905882, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_11gcg"]
+radius = 7.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yekka"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(3, 3, 1)
+angle_min = -720.0
+angle_max = 720.0
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 260.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.0
+scale_max = 3.0
+collision_mode = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lsifs"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(3, 3, 1)
+gravity = Vector3(0, 98, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7qckf"]
+radius = 380.084
+
+[node name="Bird" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_lponf")
+correct_color = "2361ff"
+
+[node name="Colorless_bird" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_bl7pw")
+animation = &"new_animation"
+
+[node name="Correct_bird" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_lsla3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_xrdv7")
+one_way_collision = true
+
+[node name="PaintBar" type="Node2D" parent="."]
+position = Vector2(-15, -31)
+
+[node name="BluePaintBar" type="ProgressBar" parent="PaintBar"]
+offset_left = 3.0
+offset_top = 6.0
+offset_right = 27.0
+offset_bottom = 10.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_xtvg1")
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="RedPaintBar" type="ProgressBar" parent="PaintBar"]
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 27.0
+offset_bottom = 5.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_yrtc5")
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="YellowPaintBar" type="ProgressBar" parent="PaintBar"]
+offset_left = 3.0
+offset_top = -4.0
+offset_right = 27.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_ww6sq")
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_node_state")]
+script = ExtResource("3_vww55")
+initial_node_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "sprite_2d", "correct_color")]
+script = ExtResource("4_oc0cy")
+character_body_2d = NodePath("../..")
+sprite_2d = NodePath("../../Colorless_bird")
+correct_color = NodePath("../../Correct_bird")
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("character_body_2d", "sprite_2d", "correct_color")]
+script = ExtResource("6_bln0r")
+character_body_2d = NodePath("../..")
+sprite_2d = NodePath("../../Colorless_bird")
+correct_color = NodePath("../../Correct_bird")
+
+[node name="Hit_Box" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit_Box"]
+shape = SubResource("CircleShape2D_11gcg")
+debug_color = Color(0.704355, 0.47626, 0.31882, 0.42)
+
+[node name="Paint_Hit" type="GPUParticles2D" parent="."]
+position = Vector2(0, -5)
+emitting = false
+amount = 40
+process_material = SubResource("ParticleProcessMaterial_yekka")
+lifetime = 0.1
+one_shot = true
+explosiveness = 1.0
+
+[node name="Paint_drip" type="GPUParticles2D" parent="."]
+position = Vector2(0, -5)
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_lsifs")
+lifetime = 0.5
+trail_enabled = true
+trail_lifetime = 0.11
+
+[node name="Detection_Area" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection_Area"]
+shape = SubResource("CircleShape2D_7qckf")
+debug_color = Color(0.720034, 0.472293, 0.237738, 0.42)
+
+[connection signal="body_entered" from="Detection_Area" to="StateMachine/Idle" method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="Detection_Area" to="StateMachine/Attack" method="_on_detection_area_body_exited"]
