@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://b1p0imrv5a8hk"]
+
+[ext_resource type="PackedScene" uid="uid://d1gqskdqku6ya" path="res://Scenes/Player.tscn" id="1_l1wxd"]
+[ext_resource type="Script" path="res://Scripts/paint..gd" id="3_xnv33"]
+[ext_resource type="PackedScene" uid="uid://bmr5133ltuh50" path="res://Scenes/enemyPaper.tscn" id="5_7p748"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_al4lx"]
+size = Vector2(2000, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0st85"]
+size = Vector3(2000, 20, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_e4f5a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onua6"]
+size = Vector2(200, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7satx"]
+size = Vector3(200, 10, 1)
+
+[node name="Main_Stage" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_l1wxd")]
+position = Vector2(8, 128)
+
+[node name="enemy2" parent="." instance=ExtResource("5_7p748")]
+position = Vector2(104, 128)
+
+[node name="Floor" type="CharacterBody2D" parent="."]
+script = ExtResource("3_xnv33")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(0, 176)
+shape = SubResource("RectangleShape2D_al4lx")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Floor"]
+position = Vector2(0, 176)
+mesh = SubResource("BoxMesh_0st85")
+texture = SubResource("ViewportTexture_e4f5a")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(-128, 144)
+script = ExtResource("3_xnv33")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_onua6")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="CharacterBody2D"]
+mesh = SubResource("BoxMesh_7satx")
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+shape = SubResource("RectangleShape2D_onua6")

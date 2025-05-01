@@ -1,0 +1,100 @@
+[gd_scene load_steps=10 format=4 uid="uid://bqkq5yqf8610v"]
+
+[ext_resource type="Script" path="res://Player/player_camera.gd" id="1_ar1a1"]
+[ext_resource type="PackedScene" uid="uid://bku6wvu54u5ei" path="res://Assets/Environment/background/mountain_scape_background.tscn" id="2_yrlfq"]
+[ext_resource type="PackedScene" uid="uid://bklaew8io0ju7" path="res://Player/Pierre.tscn" id="3_ycnvt"]
+[ext_resource type="PackedScene" uid="uid://dcrefglu620sy" path="res://Assets/Environment/TileMaps/PierreHouse_tilemap.tscn" id="5_3uqab"]
+[ext_resource type="PackedScene" uid="uid://ds7mqyrtit2bw" path="res://UI/game_screen.tscn" id="7_kxcak"]
+[ext_resource type="PackedScene" uid="uid://crg84miroo8sj" path="res://Enemies/Enemy_Scenes/red_papers.tscn" id="7_qpic0"]
+[ext_resource type="PackedScene" uid="uid://cpvu5cke7dneh" path="res://Enemies/Enemy_Scenes/frog.tscn" id="8_21ft8"]
+[ext_resource type="PackedScene" uid="uid://dll81e5gcsnh" path="res://UI/Scene_manager/pathway.tscn" id="8_j4cwt"]
+
+[sub_resource type="GDScript" id="GDScript_rxjpw"]
+script/source = "class_name Level extends Node2D
+
+
+@export var player:Player
+@export var paths:Array[Pathway]
+var data:LevelDataHandoff
+
+func _ready() -> void:
+	player.disable()
+	player.visible = false
+	
+	if data == null:
+		enter_level()
+	
+
+func enter_level() ->void:
+	if data != null:
+		init_player_location()
+	player.enabled()
+	_connect_to_paths()
+
+
+func init_player_location() ->void:
+	
+	if data != null:
+		for path in paths:
+			if path.name == data.entry_path_name:
+				player.postion = path.get_player_entry_vector()
+			player.orient(data.move_dir)
+
+func _on_player_entered_path(path: Pathway) -> void:
+	_disconnect_from_paths()
+	player.disabled()
+	player.queue_free()
+	data = LevelDataHandoff.new()
+	data.entry_path_name = path.entry_door_name
+	data.move_dir = path.get_move_dir()
+	set_process(false)
+
+func _connect_to_paths() -> void:
+	for path in paths:
+		if not path.player_entered_door.is_connected(_on_player_entered_path):
+			path.player_entered_door.connect(_on_player_entered_path)
+
+func _disconnect_from_paths() -> void:
+	for path in paths:
+		if path.player_entered_door.is_connected(_on_player_entered_path):
+			path.player_entered_door.disconnect(_on_player_entered_path)
+"
+
+[node name="TestLevel" type="Node2D" node_paths=PackedStringArray("player", "paths")]
+script = SubResource("GDScript_rxjpw")
+player = NodePath("Pierre")
+paths = [NodePath("ToTown"), NodePath("ToForest")]
+
+[node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+limit_left = 0
+limit_top = -470
+limit_right = 2000
+limit_bottom = 0
+script = ExtResource("1_ar1a1")
+player = NodePath("../Pierre")
+
+[node name="GameScreen" parent="." instance=ExtResource("7_kxcak")]
+
+[node name="MountainScapeBackground" parent="." instance=ExtResource("2_yrlfq")]
+
+[node name="TileMapLayer" parent="." instance=ExtResource("5_3uqab")]
+tile_map_data = PackedByteArray("AAAAAP//AQAAAAAAAAABAP//AQAAAAAAAAACAP//AQAAAAAAAAADAP//AQAAAAAAAAAEAP//AQAAAAAAAAAFAP//AQAAAAAAAAAGAP//AQAAAAAAAAAHAP//AQAAAAAAAAAIAP//AQAAAAAAAAAJAP//AQAAAAAAAAAKAP//AQAAAAAAAAALAP//AQAAAAAAAAAMAP//AQAAAAAAAAANAP//AQAAAAAAAAAOAP//AQAAAAAAAAAPAP//AQAAAAAAAAAQAP//AQAAAAAAAAARAP//AQAAAAAAAAASAP//AQAAAAAAAAATAP//AQAAAAAAAAAUAP//AQAAAAAAAAAVAP//AQAAAAAAAAAWAP//AQAAAAAAAAAXAP//AQAAAAAAAAAYAP//AQAAAAAAAAAZAP//AQAAAAAAAAAaAP//AQAAAAAAAAAbAP//AQAAAAAAAAAcAP//AQAAAAAAAAAdAP//AQAAAAAAAAAeAP//AQAAAAAAAAAfAP//AQAAAAAAAAAgAP//AQAAAAAAAAAhAP//AQAAAAAAAAAiAP//AQAAAAAAAAAjAP//AQAAAAAAAAAlAP//AQAAAAAAAAAmAP//AQAAAAAAAAAnAP//AQAAAAAAAAAoAP//AQAAAAAAAAApAP//AQAAAAAAAAAqAP//AQAAAAAAAAArAP//AQAAAAAAAAAsAP//AQAAAAAAAAAtAP//AQAAAAAAAAAuAP//AQAAAAAAAAAvAP//AQAAAAAAAAAwAP//AQAAAAAAAAAxAP//AQAAAAAAAAAyAP//AQAAAAAAAAAzAP//AQAAAAAAAAA0AP//AQAAAAAAAAA1AP//AQAAAAAAAAA2AP//AQAAAAAAAAA3AP//AQAAAAAAAAA4AP//AQAAAAAAAAA5AP//AQAAAAAAAAA6AP//AQAAAAAAAAA7AP//AQAAAAAAAAA8AP//AQAAAAAAAAA9AP//AQAAAAAAAAA+AP//AQAAAAAAAAAkAP//AQAAAAAAAAAaAPz/BAAAAAoAAAAsAPz/BAAAAAoAAAAyAPz/BAAAAAoAAAA6APz/BAAAAAoAAAAeAPz/BAAaAAoAAAASAPz/BAAaAAoAAAAqAPz/BAAaAAoAAAANAPz/BAAaAAoAAAAXAP7/AwAIAA4AAAAGAP7/AwAIAA4AAAAFAP7/AwAaAA0AAAABAP7/AwAaAA0AAAADAP3/AwAaAA0AAAABAP3/AwANAA0AAAAAAP3/AwANAA0AAAAAAPz/AwANAA0AAAACAPz/AwANAA0AAAAyAP7/AwANAA0AAAA2AP7/AwAIAA4AAAAmAP7/AQAAAAAAAAAiAP7/AQAAAAAAAAAhAP7/AQAAAAAAAAAjAP7/AQAAAAAAAAAkAP7/AQAAAAAAAAAlAP7/AQAAAAAAAAD/////AQAAAAAAAAD+////AQAAAAAAAAA/AP//AQAAAAAAAABAAP//AQAAAAAAAAA=")
+
+[node name="Pierre" parent="." instance=ExtResource("3_ycnvt")]
+position = Vector2(280, -40)
+
+[node name="RedPapers" parent="." instance=ExtResource("7_qpic0")]
+position = Vector2(1152, -87)
+
+[node name="Frog" parent="." instance=ExtResource("8_21ft8")]
+position = Vector2(1692, -29)
+
+[node name="ToTown" parent="." instance=ExtResource("8_j4cwt")]
+position = Vector2(1984, -64)
+entry_direction = 3
+transition_type = "fade_to_black"
+path_to_scene = "res://Levels/town.tscn"
+entry_door_name = "ToPierres"
+
+[node name="ToForest" parent="." instance=ExtResource("8_j4cwt")]
+position = Vector2(24, -64)

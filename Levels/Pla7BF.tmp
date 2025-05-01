@@ -1,0 +1,287 @@
+[gd_scene load_steps=15 format=3 uid="uid://d1gqskdqku6ya"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_lsyw3"]
+[ext_resource type="Texture2D" uid="uid://b5g6o5sqsqu1b" path="res://Assets/spritesheet.png" id="2_6fdr7"]
+[ext_resource type="PackedScene" uid="uid://d3m25wlyds6sj" path="res://Scenes/paint_splatter.tscn" id="3_fndlk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4k1d"]
+size = Vector2(12, 34)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o57jd"]
+radius = 8.0
+
+[sub_resource type="Animation" id="Animation_uabr6"]
+resource_name = "Attack"
+length = 0.65
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.1, 0.166667, 0.233333, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [20, 21, 22, 23, 24, 25, 26, 27]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../..:attacking")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.633333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AttackArea:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3, 0.633333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_22ti3"]
+resource_name = "Idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_70maj"]
+resource_name = "Jumping"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8, 9, 10, 11, 12, 13, 13]
+}
+
+[sub_resource type="Animation" id="Animation_uultn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:attacking")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../..:attacking")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../AttackArea:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_p66nv"]
+resource_name = "Running_Right"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18, 19]
+}
+
+[sub_resource type="Animation" id="Animation_2u21a"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:attacking")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.966667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_2k5m2"]
+resource_name = "Dead"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.724643, 0.724643, 0.724643, 1), Color(0.473976, 0.473976, 0.473976, 1), Color(0.277528, 0.277528, 0.277528, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bn7ga"]
+_data = {
+"Attack": SubResource("Animation_uabr6"),
+"Dead": SubResource("Animation_2k5m2"),
+"Idle": SubResource("Animation_22ti3"),
+"Jumping": SubResource("Animation_70maj"),
+"RESET": SubResource("Animation_uultn"),
+"Running_Right": SubResource("Animation_p66nv"),
+"attack": SubResource("Animation_2u21a")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dryo0"]
+radius = 12.8786
+height = 54.1745
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_lsyw3")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -40)
+zoom = Vector2(5, 5)
+limit_top = -160
+
+[node name="HealthBar" type="ProgressBar" parent="Camera2D"]
+modulate = Color(0.918715, 0.00335572, 0.0145317, 1)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -225.0
+offset_top = -150.0
+offset_right = -125.0
+offset_bottom = -123.0
+grow_vertical = 0
+value = 100.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="Camera2D/HealthBar"]
+layout_mode = 0
+offset_left = -57.0
+offset_top = 2.0
+offset_right = 4.0
+offset_bottom = 25.0
+text = "Health"
+
+[node name="WorldCollision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-8, 0)
+scale = Vector2(1.3258, -1.02337)
+shape = SubResource("RectangleShape2D_g4k1d")
+
+[node name="HitBox" type="Area2D" parent="."]
+visible = false
+position = Vector2(-8, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+scale = Vector2(1.08, 1)
+shape = SubResource("CapsuleShape2D_o57jd")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-8, 0)
+
+[node name="CharacterMovement" type="Sprite2D" parent="Marker2D"]
+texture_filter = 1
+position = Vector2(8, 0)
+texture = ExtResource("2_6fdr7")
+hframes = 28
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="Marker2D/CharacterMovement"]
+libraries = {
+"": SubResource("AnimationLibrary_bn7ga")
+}
+
+[node name="AttackArea" type="Area2D" parent="Marker2D"]
+position = Vector2(2, -1)
+scale = Vector2(0.599999, 1)
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Marker2D/AttackArea"]
+position = Vector2(56.6668, 11)
+rotation = 1.56464
+scale = Vector2(1.31999, 1.59974)
+shape = SubResource("CapsuleShape2D_dryo0")
+
+[node name="dashtimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="PaintSplatter" parent="." instance=ExtResource("3_fndlk")]
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="animation_finished" from="Marker2D/CharacterMovement/PlayerAnimation" to="." method="_on_player_animation_animation_finished"]
+[connection signal="area_entered" from="Marker2D/AttackArea" to="." method="_on_attack_area_area_entered"]

@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1p0imrv5a8hk"]
+
+[ext_resource type="PackedScene" uid="uid://d1gqskdqku6ya" path="res://Scenes/Player.tscn" id="1_l1wxd"]
+[ext_resource type="Texture2D" uid="uid://cf70vcqffsrxd" path="res://Assets/TileSheet.png" id="2_a68xh"]
+[ext_resource type="PackedScene" uid="uid://3vjl4gqarx54" path="res://Scenes/enemy.tscn" id="3_x85og"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fen43"]
+texture = ExtResource("2_a68xh")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_pygxm"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_fen43")
+
+[node name="Main_Stage" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_pygxm")
+format = 2
+layer_0/tile_data = PackedInt32Array(655359, 0, 0, 589824, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0, 589829, 0, 0, 589830, 0, 0, 589831, 0, 0, 589832, 0, 0, 589833, 0, 0, 589834, 0, 0, 589835, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 589839, 0, 0, 655358, 0, 0, 655357, 0, 0, 655356, 0, 0, 655355, 0, 0, 655354, 0, 0, 655353, 0, 0, 655352, 0, 0, 655351, 0, 0, 655350, 0, 0)
+
+[node name="Player" parent="." instance=ExtResource("1_l1wxd")]
+position = Vector2(96, 104)
+
+[node name="enemy" parent="." instance=ExtResource("3_x85og")]
+position = Vector2(-112, 104)

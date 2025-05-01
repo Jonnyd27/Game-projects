@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=4 uid="uid://b2g4jj608vgcl"]
+
+[ext_resource type="Script" path="res://Levels/Levels_Scripts/levels.gd" id="1_8wjk7"]
+[ext_resource type="PackedScene" uid="uid://dylnhj8wgsivb" path="res://Assets/Environment/background/TownBackgroundPB.tscn" id="2_67i88"]
+[ext_resource type="Script" path="res://UI/Scripts/player_camera.gd" id="2_jpkec"]
+[ext_resource type="PackedScene" uid="uid://bklaew8io0ju7" path="res://Player/Pierre.tscn" id="3_oqu7p"]
+[ext_resource type="PackedScene" uid="uid://ds7mqyrtit2bw" path="res://UI/game_screen.tscn" id="4_chqyi"]
+[ext_resource type="PackedScene" uid="uid://dcrefglu620sy" path="res://Assets/Environment/TileMaps/PierreHouse_tilemap.tscn" id="5_qfp4e"]
+[ext_resource type="PackedScene" uid="uid://dll81e5gcsnh" path="res://Levels/pathway.tscn" id="6_1jlrk"]
+[ext_resource type="PackedScene" uid="uid://bhns6o21f1ook" path="res://Assets/Interactable_items/yellow_flower.tscn" id="8_2ldt3"]
+
+[node name="Town" type="Node2D" node_paths=PackedStringArray("player", "paths")]
+script = ExtResource("1_8wjk7")
+player = NodePath("Pierre")
+paths = [NodePath("TownW")]
+
+[node name="BackGround" parent="." instance=ExtResource("2_67i88")]
+
+[node name="PlayerCamera2D" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+limit_left = 0
+limit_top = -350
+limit_right = 2000
+limit_bottom = 128
+script = ExtResource("2_jpkec")
+player = NodePath("../Pierre")
+
+[node name="Pierre" parent="." instance=ExtResource("3_oqu7p")]
+position = Vector2(1808, 80)
+
+[node name="GameScreen" parent="." instance=ExtResource("4_chqyi")]
+
+[node name="TileMapLayer" parent="." instance=ExtResource("5_qfp4e")]
+tile_map_data = PackedByteArray("AAAAAP//AQAAAAEAAAABAP//AQAAAAEAAAACAP//AQAAAAEAAAADAP//AQAAAAEAAAAEAP//AQAAAAEAAAAFAP//AQAAAAEAAAAGAP//AQAAAAEAAAAHAP//AQAAAAEAAAAIAP//AQAAAAEAAAAJAP//AQAAAAEAAAAKAP//AQAAAAEAAAALAP//AQAAAAEAAAAMAP//AQAAAAEAAAANAP//AQAAAAEAAAAOAP//AQAAAAEAAAAPAP//AQAAAAEAAAAQAP//AQAAAAEAAAARAP//AQAAAAEAAAASAP//AQAAAAEAAAATAP//AQAAAAEAAAAUAP//AQAAAAEAAAAVAP//AQAAAAEAAAAWAP//AQAAAAEAAAAXAP//AQAAAAEAAAAYAP//AQAAAAEAAAAZAP//AQAAAAEAAAAaAP//AQAAAAEAAAAbAP//AQAAAAEAAAAcAP//AQAAAAEAAAAdAP//AQAAAAEAAAAeAP//AQAAAAEAAAAfAP//AQAAAAEAAAAgAP//AQAAAAEAAAAhAP//AQAAAAEAAAAiAP//AQAAAAEAAAAjAP//AQAAAAEAAAAnAP//AQAAAAEAAAAoAP//AQAAAAEAAAApAP//AQAAAAEAAAAqAP//AQAAAAEAAAArAP//AQAAAAEAAAAsAP//AQAAAAEAAAAtAP//AQAAAAEAAAAuAP//AQAAAAEAAAAvAP//AQAAAAEAAAAwAP//AQAAAAEAAAAxAP//AQAAAAEAAAAyAP//AQAAAAEAAAAzAP//AQAAAAEAAAA0AP//AQAAAAEAAAA1AP//AQAAAAEAAAA2AP//AQAAAAEAAAA3AP//AQAAAAEAAAA4AP//AQAAAAEAAAA5AP//AQAAAAEAAAA6AP//AQAAAAEAAAA7AP//AQAAAAEAAAA8AP//AQAAAAEAAAA9AP//AQAAAAEAAAA+AP//AQAAAAEAAAA/AP//AQAAAAEAAABAAP//AQAAAAEAAABBAP//AQAAAAEAAABCAP//AQAAAAEAAABDAP//AQAAAAEAAABEAP//AQAAAAEAAABFAP//AQAAAAEAAABGAP//AQAAAAEAAAAjAAAAAQAAAAEAAAAkAAAAAQAAAAEAAAAkAAEAAQAAAAEAAAAlAAEAAQAAAAEAAAAlAAIAAQAAAAEAAAAmAAIAAQAAAAEAAAAmAAMAAQAAAAEAAAAnAAMAAQAAAAEAAAAoAAMAAQAAAAEAAAApAAMAAQAAAAEAAAAqAAMAAQAAAAEAAAArAAMAAQAAAAEAAAAsAAMAAQAAAAEAAAAtAAMAAQAAAAEAAAAuAAMAAQAAAAEAAAAvAAMAAQAAAAEAAAAwAAMAAQAAAAEAAAAxAAMAAQAAAAEAAAAyAAMAAQAAAAEAAAAzAAMAAQAAAAEAAAA0AAMAAQAAAAEAAAA1AAMAAQAAAAEAAAA2AAMAAQAAAAEAAAA3AAMAAQAAAAEAAAA4AAMAAQAAAAEAAAA5AAMAAQAAAAEAAAA6AAMAAQAAAAEAAAA=")
+
+[node name="TownW" parent="." instance=ExtResource("6_1jlrk")]
+position = Vector2(10, -64)
+entry_direction = 1
+transition_type = "fade_to_black"
+path_to_scene = "res://Levels/PierresHouse.tscn"
+entry_door_name = "PierresE"
+
+[node name="Apothecary_House" parent="." instance=ExtResource("6_1jlrk")]
+position = Vector2(1864, 72)
+entry_direction = 1
+transition_type = "fade_to_black"
+path_to_scene = "res://Levels/Apothecary.tscn"
+entry_door_name = "Apothecary'sDoor"
+
+[node name="YellowFlower" parent="." instance=ExtResource("8_2ldt3")]
+position = Vector2(2208, -48)

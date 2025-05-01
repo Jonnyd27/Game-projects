@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=4 uid="uid://bqkq5yqf8610v"]
+
+[ext_resource type="Script" path="res://Levels/Levels_Scripts/levels.gd" id="1_5nuj3"]
+[ext_resource type="Script" path="res://UI/Scripts/player_camera.gd" id="2_wkycj"]
+[ext_resource type="PackedScene" uid="uid://ds7mqyrtit2bw" path="res://UI/game_screen.tscn" id="3_b08fc"]
+[ext_resource type="PackedScene" uid="uid://bku6wvu54u5ei" path="res://Assets/Environment/background/mountain_scape_background.tscn" id="4_b7wpe"]
+[ext_resource type="PackedScene" uid="uid://dcrefglu620sy" path="res://Assets/Environment/TileMaps/PierreHouse_tilemap.tscn" id="5_un42h"]
+[ext_resource type="PackedScene" uid="uid://bklaew8io0ju7" path="res://Player/Pierre.tscn" id="6_sxv1u"]
+[ext_resource type="PackedScene" uid="uid://dll81e5gcsnh" path="res://Levels/pathway.tscn" id="9_fgxsg"]
+[ext_resource type="AudioStream" uid="uid://cqdeltvovwtxi" path="res://Assets/Sounds/mixkit-campfire-night-wind-1736.wav" id="9_hs4eh"]
+[ext_resource type="PackedScene" uid="uid://bdrn8oodld8ud" path="res://Enemies/Enemy_Scenes/deer.tscn" id="9_j7spq"]
+
+[node name="PierresHouse" type="Node2D" node_paths=PackedStringArray("player", "paths")]
+script = ExtResource("1_5nuj3")
+player = NodePath("Pierre")
+paths = [NodePath("PierresE"), NodePath("PierresW")]
+
+[node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+limit_left = 0
+limit_top = -470
+limit_right = 2000
+limit_bottom = 0
+script = ExtResource("2_wkycj")
+player = NodePath("../Pierre")
+
+[node name="GameScreen" parent="." instance=ExtResource("3_b08fc")]
+
+[node name="MountainScapeBackground" parent="." instance=ExtResource("4_b7wpe")]
+
+[node name="TileMapLayer" parent="." instance=ExtResource("5_un42h")]
+tile_map_data = PackedByteArray("AAAAAP//AQAAAAAAAAABAP//AQAAAAAAAAACAP//AQAAAAAAAAADAP//AQAAAAAAAAAEAP//AQAAAAAAAAAFAP//AQAAAAAAAAAGAP//AQAAAAAAAAAHAP//AQAAAAAAAAAIAP//AQAAAAAAAAAJAP//AQAAAAAAAAAKAP//AQAAAAAAAAALAP//AQAAAAAAAAAMAP//AQAAAAAAAAANAP//AQAAAAAAAAAOAP//AQAAAAAAAAAPAP//AQAAAAAAAAAQAP//AQAAAAAAAAARAP//AQAAAAAAAAASAP//AQAAAAAAAAATAP//AQAAAAAAAAAUAP//AQAAAAAAAAAVAP//AQAAAAAAAAAWAP//AQAAAAAAAAAXAP//AQAAAAAAAAAYAP//AQAAAAAAAAAZAP//AQAAAAAAAAAaAP//AQAAAAAAAAAbAP//AQAAAAAAAAAcAP//AQAAAAAAAAAdAP//AQAAAAAAAAAeAP//AQAAAAAAAAAfAP//AQAAAAAAAAAgAP//AQAAAAAAAAAhAP//AQAAAAAAAAAiAP//AQAAAAAAAAAjAP//AQAAAAAAAAAlAP//AQAAAAAAAAAmAP//AQAAAAAAAAAnAP//AQAAAAAAAAAoAP//AQAAAAAAAAApAP//AQAAAAAAAAAqAP//AQAAAAAAAAArAP//AQAAAAAAAAAsAP//AQAAAAAAAAAtAP//AQAAAAAAAAAuAP//AQAAAAAAAAAvAP//AQAAAAAAAAAwAP//AQAAAAAAAAAxAP//AQAAAAAAAAAyAP//AQAAAAAAAAAzAP//AQAAAAAAAAA0AP//AQAAAAAAAAA1AP//AQAAAAAAAAA2AP//AQAAAAAAAAA3AP//AQAAAAAAAAA4AP//AQAAAAAAAAA5AP//AQAAAAAAAAA6AP//AQAAAAAAAAA7AP//AQAAAAAAAAA8AP//AQAAAAAAAAA9AP//AQAAAAAAAAA+AP//AQAAAAAAAAAkAP//AQAAAAAAAAAaAPz/BAAAAAoAAAAsAPz/BAAAAAoAAAAyAPz/BAAAAAoAAAA6APz/BAAAAAoAAAAeAPz/BAAaAAoAAAASAPz/BAAaAAoAAAAqAPz/BAAaAAoAAAANAPz/BAAaAAoAAAAXAP7/AwAIAA4AAAAyAP7/AwANAA0AAAA2AP7/AwAIAA4AAAAmAP7/AQAAAAAAAAAiAP7/AQAAAAAAAAAhAP7/AQAAAAAAAAAjAP7/AQAAAAAAAAAkAP7/AQAAAAAAAAAlAP7/AQAAAAAAAAA/AP//AQAAAAAAAABAAP//AQAAAAAAAAD+////AQAAAAAAAAD/////AQAAAAAAAAAJAPz/BAAAAAoAAAAFAPz/BAAAAAoAAAANAP7/AwANAA0AAAAEAP7/AwAAAA0AAAAqAP7/AwAUAA4AAAA=")
+
+[node name="Pierre" parent="." instance=ExtResource("6_sxv1u")]
+position = Vector2(1088, -75)
+
+[node name="PierresE" parent="." instance=ExtResource("9_fgxsg")]
+position = Vector2(1992, -63)
+entry_direction = 3
+transition_type = "fade_to_black"
+path_to_scene = "res://Levels/town.tscn"
+entry_door_name = "TownW"
+
+[node name="PierresW" parent="." instance=ExtResource("9_fgxsg")]
+position = Vector2(-8, -63)
+entry_direction = 1
+transition_type = "fade_to_black"
+path_to_scene = "res://Levels/forest.tscn"
+entry_door_name = "ForestE"
+
+[node name="Wind" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_hs4eh")
+volume_db = -15.0
+autoplay = true
+
+[node name="Deer" parent="." instance=ExtResource("9_j7spq")]
+position = Vector2(1224, -80)

@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://3s2taibwyvix"]
+
+[ext_resource type="PackedScene" uid="uid://dll81e5gcsnh" path="res://Levels/pathway.tscn" id="1_bw8sa"]
+[ext_resource type="Script" path="res://Levels/Levels_Scripts/levels.gd" id="1_yg8sp"]
+[ext_resource type="PackedScene" uid="uid://bklaew8io0ju7" path="res://Player/Pierre.tscn" id="3_jddv0"]
+[ext_resource type="Script" path="res://UI/Scripts/player_camera.gd" id="4_wf5bf"]
+[ext_resource type="PackedScene" uid="uid://bq817o54cqda3" path="res://Assets/NPCs/apothecary.tscn" id="5_nkpb5"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3pqbq"]
+
+[node name="Apothocary" type="Node2D" node_paths=PackedStringArray("player", "paths")]
+script = ExtResource("1_yg8sp")
+player = NodePath("Pierre")
+paths = [NodePath("Pathway")]
+
+[node name="Pathway" parent="." instance=ExtResource("1_bw8sa")]
+position = Vector2(8, -16)
+entry_direction = 3
+transition_type = "fade_to_black"
+push_distance = 16
+path_to_scene = "res://Levels/town.tscn"
+entry_door_name = "Apothecary'sDoor"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_3pqbq")
+
+[node name="Pierre" parent="." instance=ExtResource("3_jddv0")]
+position = Vector2(40, -8)
+
+[node name="PlayerCamera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+zoom = Vector2(3, 3)
+limit_left = 0
+limit_top = -128
+limit_right = 224
+limit_bottom = 0
+script = ExtResource("4_wf5bf")
+player = NodePath("../Pierre")
+
+[node name="Apothecary" parent="." instance=ExtResource("5_nkpb5")]
+position = Vector2(120, -48)
